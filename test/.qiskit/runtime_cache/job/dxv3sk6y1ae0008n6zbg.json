@@ -1,0 +1,40 @@
+{
+    "id": "cxv3sk6y1ae0008n6zbg",
+    "hub": "the-hub",
+    "group": "the-group",
+    "project": "the-project",
+    "backend": "ibm_kyiv",
+    "state": {
+        "status": "Failed",
+        "reason": "Internal error. -- Try again or contact support. -- https://ibm.biz/error_codes#1500",
+        "reason_code": 1500
+    },
+    "status": "Failed",
+    "params": {
+        "pubs": [
+            [
+                "eJy92AdUlWUcx/H3igqKe2/FvVBQcaKg4sAt4J6IoCgOFPeqbO+9h+2999R2tveelpUNm9bpWKf43fsF+eXhnNRzes+pj1/qyu36PP+/NjE9c3R6VvVQVCiIPKHcwiA2L4gp/uGW4MBTQf+IH9fU33LyV+Ssyi+KT0zqm7Inbn9WWnzChk2FofDLQqHCwJ9QmZ9GTxRWxEpYGaMxBqtgVYzFalgda5R9i8VPLayNdbAu1sP62AAbYiNsjE2wKTbD5tgCW2IrjMPW2AbbYjtsjx2wI3bCztgFu2I8dsPumICJ2AN7Yi9Mwt7YB/tiP+yPAzAZB+IgTMFUHIxDcCim4TAcjiNwJKbjKByNY3AsjsPxOAEnYgZmYhZOwsk4BafiNJyOM3AmzsLZOAfnYjbOwxycj7mYhwtwIebjIlyMBbgEl+IyXI4l93EFrsQiXIWrcQ2uxXW4HjfgRtyEm4OSRzc5FBy4+f9+MqaPyC7K1fvqVPIfHdMoPi1rf9wf20vHQHkvzpxa+uIj+UYph/DipCN5l0mH9Y0Skveu2bl7X0rpNKxQzouHDc0offXhfyhN/t9Pv8qOw/pQtvVqnLdra3TqIX/6/+3fTT7kDzu5dHmV97OXeSNBZEEW//V38cN3iQqvzY1BdCh7aU5+QUHJsCjvcpXs5aPwaDwGt+KxeBwejyfgiXgSnoyn4Kl4Gp6OZ+CZeBaejefguXgeno8X4IV4EV6Ml+CleBlejlfgNrwSr8Kr8Rq8Fq/D6/EGvBFvwpvxFrwVb8Pb8Q68E+/Cu/EevBfvw/vxAXwQH8KH8RF8FB/D7bgDH8cn8El8Cp/GZ/BZfA534vP4Ar6IL+HL+Aq+iq/h6/gGvolv4dv4Dr6L7+H7+AF+iB/hx/gJfoqf4S78HL/A3fglfoVf4x78Br/F7/B73Is/4I/4E/6Mv+CvuA9/w9/D9z2qzG+T9+Of+BdGHxgIIc8KnlGeFT0reVb2jPaM8aziWdUz1rOaZ3XPGp41PWt51vas41nXs55nfc8Gng09G3k29mzi2dSzmWdzzxaeLT1becZ5tvZs49nWs51ne88Onh099YQiu9y+3tmzi2dXz3jPbp7dPRM8Ez17ePY8+BaE320v/3qSZ2/PPp59PfsdfLPC36K/f32AZ7LnQM9BnimeqZ6DPYd4DvVM8xzmOdxzhOdIz3TPUZ6jPcd4jvUc5znec4LnRM8Mz0zPLM9JnpM9p3hO9ZzmOd1zhudMz1mesz3neM71zPac55njOd8z1zPPc4HnQs98z0Weiz0LPJd4LvVc5rncs9BzhedKzyLPVZ6rPdd4rvVc57nec4Onxp2mRsn/wdBkCf9mPIisT+3M8KIMIitRe1DLTxtPa067TQtNW0yrS/tKS0qbSetIO0iLR9tGK0Z7RctEG0RrQ7tCC0JboVUQmf8a+pr0Gu+a6Rrkmt4a2ZrHGsKavBq3mrEarJqmGqGamxqWGowaf5p5GnSabppkGl8aUppMGkepQWTwaNpoxGiuaJhogmhsaFZoQGgqaBTo/uvS66breutO6yLr9urK6p7qcupG6hrq7unC6Zbpauk+6RLp5ui6zA0iF0O3QVdA516HXSdcx1pnWQdYp1ZHVedTh1InUcdPZ04HTadLR0rnSIdHJ0bHRGdDB0KnQL/0+sOU/iC1+R+6unsI",
+                [
+                    "IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIZIIIIIIZIIIIIIIIIIIZIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII"
+                ],
+                [
+                ]
+            ]
+        ],
+        "version": 2
+    },
+    "program": {
+        "id": "estimator"
+    },
+    "created": "2025-01-02T07:14:20.678Z",
+    "ended": "2025-01-02T07:14:23.636Z",
+    "runtime": "",
+    "cost": 18000,
+    "tags": null,
+    "session_id": null,
+    "usage": {
+        "seconds": 0
+    },
+    "private": false,
+    "user_id": "ad23bc0732543df64f35cd12"
+}

@@ -1,0 +1,17 @@
+{
+    "default-ibm-quantum": {
+        "channel": "ibm_quantum",
+        "instance": "hub-one/group-one/project-one",
+        "private_endpoint": false,
+        "token": "de638e834a4925507bf4181220eff41d116a7baabd9a339cc2e8a3be570f6196cec2f3d77aabc773e1ae1e62ba67b3a5a7d0bbe9de015b89ec65692803c547e9",
+        "url": "https://auth.quantum-computing.ibm.com/api"
+    },
+
+    "qiskit-other": {
+        "channel": "ibm_quantum",
+        "instance": "hub-two/group-two/project-two",        
+        "private_endpoint": false,
+        "token": "726f2418e17c5845aad93c8e8a3cccaa642b9473132aaec47da93cb2f619fe3d156fb4962ebf8865bed278970bbddc3db0caf58c429b2fffd8c8c0359d80b43a",
+        "url": "https://auth.quantum-computing.ibm.com/api"
+    }
+}

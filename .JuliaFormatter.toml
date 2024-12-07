@@ -1,0 +1,54 @@
+# I wanted to use Runic.jl, which allows no configuration.
+# But it indents submodules. Currently in an attempt to mimic
+# private and public symbols, I am putting the all of the not-api
+# things in a submodule like this:
+#
+# module MyMod
+# module _MyMod
+#  _myinnerfunc(x) = 2 * x
+# end
+# import .._myinnerfunc
+# myapifunc(x) = _myinnerfunc
+# end
+#
+# In a typical module, this means *most* of the code is in the submodule.
+# I don't want to indent most of the code in the module. There are a few
+# ways to try to get around this. To organize the code differently. I know
+# people have discussed schemes in the fora. I could look them up or ask.
+# But in the short term, I am continuing with the current scheme. And
+# I need a formatter that will not require indenting submodules.
+# Btw. *Not* indenting submodules makes the code much harder to read.
+# But I most definitley want to use modules and submodules liberally
+# to avoid losing track of dependencies. This is laborious to reimpose
+# after the fact.
+#
+# I copied the settings for Blue Style below.
+# Then make a couple of changes noted below
+
+always_for_in = true
+always_use_return = true
+annotate_untyped_fields_with_any = false
+conditional_to_if = true
+import_to_using = true
+
+# Usually almost all of a module is a submodule. So we don't want indenting.
+indent_submodule = false
+
+# Sometimes pipes are easier to read
+pipe_to_function_call = false
+
+remove_extra_newlines = true
+separate_kwargs_with_semicolon = true
+short_to_long_function_def = true
+whitespace_in_kwargs = false
+whitespace_ops_in_indices = true
+yas_style_nesting = false
+
+ignore = [
+    "examples",
+    ".git",
+    ".CondaPkg",
+    ".ipynb_checkpoints",
+    ".pytest_cache",
+    ".venv",
+]
