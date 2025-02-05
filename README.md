@@ -2,8 +2,20 @@
 
 [![Aqua QA](https://raw.githubusercontent.com/JuliaTesting/Aqua.jl/master/badge.svg)](https://github.com/JuliaTesting/Aqua.jl)
 
-
 A Julia-language client for the IBM Quantum Platform via the REST API.
+
+To use install `QiskitRuntime` do the following from the Julia REPL
+
+```
+julia> using Pkg
+julia> pkg"registry add git@github.ibm.com:John-Lapeyre/QuantumRegistry.git"
+julia> Pkg.add("QiskitRuntime")
+julia> using QiskitRuntime
+```
+
+This adds a registry to your Julia installation that allows Julia to find this package and
+it's dependencies that are not in the General Registry
+
 
 Documentation is not deployed online. You can view it like this:
 
