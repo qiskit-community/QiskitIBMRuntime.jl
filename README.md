@@ -14,7 +14,7 @@ julia> using QiskitRuntime
 ```
 
 This adds a registry to your Julia installation that allows Julia to find this package and
-it's dependencies that are not in the General Registry
+its dependencies that are not in the General Registry
 
 
 Documentation is not deployed online. You can view it like this:
