@@ -1,7 +1,7 @@
 name = "QiskitRuntime"
 uuid = "721cb36f-8cdb-4047-ab39-84aff8fc02a4"
 authors = ["John Lapeyre <jlapeyre@users.noreply.github.com> and contributors"]
-version = "0.1.0"
+version = "0.2.0"
 
 [deps]
 Accessors = "7d9f7c33-5ae7-4f3b-8dc6-eff91059b697"
