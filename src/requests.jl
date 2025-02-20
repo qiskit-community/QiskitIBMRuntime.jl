@@ -435,6 +435,9 @@ POST_request(endpoint::AbstractString, body, ::Nothing) = POST_request(endpoint,
 #   response is not found then: If `strict` is `true`, throw an error. If `strict` is
 #   `false`, then return `nothing`.
 #   If `nothing`, then try the cache first, and if that fails, make the GET request.
+#   Note that the determination that the response does not indicate a final state is
+#   made at a higher level, outside of `Request`. If the state is not final, then another
+#   call will be made, which will in turn call `_cach_or_query` again.
 # - strict: See `request`.
 # - cache_name: The base of the filename for storing and retrieving a cached response.
 #   If `nothing`, then `cache_name` is set to `id`. The extension ".json" is appendend.
@@ -471,7 +474,7 @@ function _cache_or_query(
     else
         response = get_func(id, qaccount; kws...)
     end
-    if !isnothing(response) && !isnothing(get_env(:QISKIT_IBM_RUNTIME_NO_CACHE))
+    if !isnothing(response) && isnothing(get_env(:QISKIT_IBM_RUNTIME_NO_CACHE))
         write_response_cache(endpoint_cache_dir, response, cache_name)
     end
     return (from_cache=false, json=response)
@@ -583,8 +586,8 @@ export job,
 # API module. So, when sensible, we actually define the API function out here.
 #
 # If `exclude_params` is true, we can get the info from one of two cache directories.
-# The endpoint cache dir "job" contains params as well, but this will be discarded
-# the caller.
+# The endpoint cache dir "job" contains params as well, but if we find cache in "job" dir
+# we can use it. Extra info will be discarded by the caller.
 # We try them sequentially. If they both fail and `refresh` is not `false`, then
 # we try the server.
 """
@@ -606,18 +609,38 @@ function job(
     _get_job =
         (job_id, qaccount_=nothing) ->
             GET_request("jobs/$job_id", qaccount_; exclude_params)
-    cache_dir = exclude_params ? "job_exclude_params" : "job"
-    first_response =
-        _cache_or_query(job_id, cache_dir, _get_job, qaccount; refresh, strict=false)
-    if isnothing(first_response) && exclude_params
-        # We don't want params. But we look for cached endpoing "job" and the caller will ignore the params
-        # included in the response. We set `strict=true` so that if `refresh` is false and the cache is
-        # not found, we throw instead of going to the server.
-        (from_cache, response) =
-            _cache_or_query(job_id, "job", _get_job, qaccount; refresh, strict=true)
-    else
-        (from_cache, response) = first_response
+
+    if exclude_params
+        if !isnothing(refresh)
+            (from_cache, response) =
+                _cache_or_query(job_id, "job_exclude_params", _get_job, qaccount; refresh, strict=true)
+            return (from_cache, JobResponse(response))
+        end
+        # First try only job_exclude_params cache
+        first_response =
+            _cache_or_query(job_id, "job_exclude_params", _get_job, qaccount; refresh=false, strict=false)
+        if isnothing(first_response)
+            # Found nothing in job_exclude_params cache
+            # So try "job" cache
+            second_response =
+                _cache_or_query(job_id, "job", _get_job, qaccount; refresh=false, strict=false)
+            if !isnothing(second_response)
+                # "job" cache succeeded
+                (from_cache, response) = second_response
+            else
+                # Go back to job_exclude_params and use server if refresh allows
+                third_response = _cache_or_query(job_id, "job_exclude_params", _get_job, qaccount; refresh=refresh, strict=true)
+                (from_cache, response) = third_response
+            end
+        else
+            # Found on first try in "job_exclude_params" cache
+            (from_cache, response) = first_response
+        end
+        return (from_cache, JobResponse(response))
     end
+    # Don't exclude params, so this is easy.
+    (from_cache, response) =
+        _cache_or_query(job_id, "job", _get_job, qaccount; refresh, strict=true)
     return (from_cache, JobResponse(response))
 end
 
@@ -780,11 +803,12 @@ $(_endpoint("jobs/{job_id}/results", "jobs#tags__jobs__operations__FindJobResult
 The other kind of data on a job, which we call "job info", is retrieved with [`job`](@ref),
 or [`jobs`](@ref)
 """
-function results(job_id, qaccount=nothing; refresh=nothing)
+function results(job_id, qaccount=nothing; refresh::Opt{Bool}=nothing)
     _get_results =
         (job_id, account=nothing) -> GET_request("jobs/$job_id/results", qaccount)
+    # strict is false because we may need to return `nothing` if nothign is available.
     (_from_cache, json_response) =
-        _cache_or_query(job_id, "results", _get_results, qaccount; refresh)
+        _cache_or_query(job_id, "results", _get_results, qaccount; refresh, strict=false)
     return json_response
 end
 
@@ -1002,6 +1026,7 @@ function delete_server_job(job_id, qaccount=nothing)
     return DELETE_request("jobs/$job_id", qaccount)
 end
 
+# Requests the minimum amount of data, just to see if the job exists.
 function job_exists(job_id, qaccount=nothing)
     response = GET_request_inner("jobs/$job_id", qaccount; exclude_params=true)
     response.status == 200 && return true

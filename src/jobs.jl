@@ -130,6 +130,14 @@ end
 
 @pretty_show(Metrics)
 
+"""
+    in_final_state(m::Metrics)
+
+Return `true` if `m` is in a final state.
+
+This is determined by a timestamap `:finished`, which may be
+present or absent.
+"""
 function in_final_state(m::Metrics)
     return haskey(m.timestamps, :finished)
 end
@@ -204,6 +212,11 @@ function Base.isless(j1::RuntimeJob, j2::RuntimeJob)
     return isless(j1.creation_date, j2.creation_date)
 end
 
+"""
+    in_final_state(jb::RuntimeJob)
+
+Return `true` if `jb` is in a final state.
+"""
 function in_final_state(jb::RuntimeJob)
     return in_final_state(jb.status)
 end
@@ -484,7 +497,7 @@ Return information on `job_id`.
 
 See [`results`](@ref), [`metrics`](@ref).
 """
-@argumend function job(
+function job(
     job_id::JobIdOrString,
     account=nothing;
     params::Bool=true,
@@ -554,7 +567,7 @@ Return `true` only if `job_id` exists on the server.
 The job data may exist in local cache even if it was deleted from the server.
 """
 function job_exists(job_id::JobIdOrString, account=nothing)
-    return job_exists(JobId(job_id), account)
+    return Requests.job_exists(JobId(job_id), account)
 end
 
 """
@@ -586,14 +599,14 @@ end
 
 Return an iterator over `JobId`s for all jobs.
 
-`job_ids` first requests information on the jobs, then extracts the ids. This function
+`job_ids` first requests information on the jobs from the server, then extracts the ids. This function
 always makes requests to the REST API and does not access the cache.
 
 # Keyword arguments
 
 - `tags`:  A list of tags to filter jobs. (The search must match *all* tags?)
 - `limit::Opt{Ingeter}`: Number of results to return at a time.
-- `offest::Opt{Integer}`: Number of results to offset when retrieving the list of jobs.
+- `offset::Opt{Integer}`: Number of results to offset when retrieving the list of jobs.
 - `pending::Opt{Bool}`: If true, return only jobs not in a final state. If `false`
    return only the complement.
 - `instance::Opt{Union{AbstractString,Instance}}` instance to filter jobs. Either
@@ -795,13 +808,14 @@ end
 
 # Sometimes "result" sometimes "results" in Python version. We should pick the right name.
 """
-    results(job_id, account=nothing; refresh=false)
+    results(job_id, account=nothing; refresh::Opt{Bool}=nothing)
 
 Return results for `job_id`.
 
+If no results are available, then `nothing` is returned.
 See [`job`](@ref), [`metrics`](@ref).
 """
-function results(job_id, account=nothing; refresh=false)
+function results(job_id, account=nothing; refresh::Opt{Bool}=nothing)
     results_response = Requests.results(job_id, account; refresh)
     res = Decode.decode(results_response; job_id)
 
@@ -828,11 +842,20 @@ More precisely, if `job.results` is not `nothing` and `refresh` is `false`, then
 returned. If `job.results` is `nothing` then results are fetched from the cache or the REST API. If
 `refresh` is `false` then the cache is preferred.
 """
-function results(job::RuntimeJob, account=nothing; refresh=false)
+function results(job::RuntimeJob, account=nothing; refresh::Opt{Bool}=nothing)
     (isnothing(job) || refresh) && return results(job.job_id, account; refresh)
     return job.results
 end
 
+"""
+    struct Batch
+
+Holds information identifying a session and the jobs
+run in the session.
+
+- `session_id::SessionId`: The session id.
+- `job_ids::Vector{JobId}`: All job ids associated with this session.
+"""
 @struct_hash_equal struct Batch
     session_id::SessionId
     job_ids::Vector{JobId}
@@ -892,7 +915,9 @@ Base.convert(::Type{String}, mode::SessionMode) = string(mode)
 """
     open_session(backend_name::AbstractString, qaccount=nothing;  max_session_ttl::Opt{Integer}=nothing)
 
-Open a session
+Open a session and return a `Batch` object.
+
+This is called automatically by the `Batch` constructor.
 """
 function open_session(
     backend_name::AbstractString,
@@ -906,6 +931,15 @@ function open_session(
            Batch
 end
 
+"""
+    close_session(batch::Batch, qaccount=nothing)
+
+Close the session associated with `batch`.
+
+This function is called automatically when calling the `Batch` constructor.
+Note this doesn't really hit the "close" endpoint, but rather changes the state
+of "accepting jobs" to `false`.
+"""
 function close_session(batch::Batch, qaccount=nothing)
     return Requests.close_session(batch.session_id.id, qaccount)
 end
@@ -914,6 +948,14 @@ function get_session(batch::Batch, qaccount=nothing)
     return Requests.get_session(batch.session_id.id, qaccount)
 end
 
+"""
+    Batch(func, backend_name::AbstractString, qaccount=nothing; max_session_ttl::Opt{Integer}=nothing,
+           mode::Union{SessionMode,StringOrSymbol}=SessionMode(:Batch),
+
+Open a session and call `func` on new `Batch` object.
+
+The session is "closed" on exiting `func`. This is meant to be used with `do` block syntax.
+"""
 function Batch(
     func,
     backend_name::AbstractString,
@@ -930,6 +972,16 @@ function Batch(
     return batch
 end
 
+"""
+    struct BatchInfo
+
+Holds data describing session.
+
+Either batch or dedicated session. This is returned
+by `session_info`.
+
+See [`session_info`](@ref).
+"""
 @with_kw struct BatchInfo
     id::SessionId
     backend_name::String
@@ -970,6 +1022,15 @@ function Base.isless(b1::BatchInfo, b2::BatchInfo)
 end
 
 session_info(batch::Batch, qaccount=nothing) = session_info(batch.session_id, qaccount)
+
+"""
+    session_info(session_id::SessionIdOrString, qaccount=nothing; refresh::Opt{Bool}=nothing)
+    session_info(batch::Batch, qaccount=nothing)
+
+Return a `BatchInfo` object with information on session, either batch or dedicated.
+
+See [`BatchInfo`](@ref).
+"""
 function session_info(
     session_id::SessionIdOrString,
     qaccount=nothing;
@@ -1136,6 +1197,14 @@ end
 
 metrics(jb::RuntimeJob) = jb.metrics
 
+"""
+    get_params(id::JobIdOrString, account=nothing; refresh::Opt{Bool}=nothing)
+    get_params(jb::RuntimeJob)
+
+Get input parameters associated with job.
+
+This contains options and PUBs.
+"""
 function get_params(id::JobIdOrString, account=nothing; refresh::Opt{Bool}=nothing)
     return get_params(job(id, account; results=false, metrics=false, refresh))
 end
@@ -1148,6 +1217,13 @@ function get_pubs(id::JobIdOrString, account=nothing; refresh::Opt{Bool}=nothing
     return get_pubs(get_params(id, account; refresh))
 end
 
+"""
+    get_pubs(id::JobIdOrString, account=nothing; refresh::Opt{Bool}=nothing)
+    get_pubs(jb::RuntimeJob)
+    get_pubs(jp::JobParams)
+
+Return a list of PUBs associated with a job from the object or resource.
+"""
 function get_pubs(jb::RuntimeJob)
     p = get_params(jb)
     isnothing(p) && return p
@@ -1181,6 +1257,12 @@ function get_status(jb::RuntimeJob)
     return jb.status
 end
 
+"""
+    get_status(jid::JobIdOrString, account=nothing; refresh::Opt{Bool}=nothing)
+    get_status(jb::RuntimeJob)
+
+Return the status of the job.
+"""
 function get_status(jid::JobIdOrString, account=nothing; refresh::Opt{Bool}=nothing)
     return get_status(job_info(jid, account; refresh))
 end
@@ -1190,6 +1272,14 @@ function get_tags(jb::RuntimeJob, idx=nothing)
     return jb.tags[idx]
 end
 
+"""
+    get_tags(jid::JobIdOrString, idx=nothing; account=nothing, refresh::Opt{Bool}=nothing)
+    get_tags(jb::RuntimeJob, idx=nothing)
+
+Return the tags associated with the job.
+
+- `idx`: If not `nothing`, return `getindex(thetags, idx)`.
+"""
 function get_tags(
     jid::JobIdOrString,
     idx=nothing;
@@ -1238,6 +1328,14 @@ function get_result_data(jb::RuntimeJob)
     return get_result_data(jb.results)
 end
 
+"""
+    get_result_data(jid::JobIdOrString, account=nothing; refresh::Opt{Bool}=nothing)
+    get_result_data(results::PrimitiveResults.PrimitiveResult)
+    get_result_data(jb::RuntimeJob)
+
+Get a list of results data, typically a `NamedTuple` with fields `evs`, etc. The list
+contains one entry for each input PUB.
+"""
 function get_result_data(results::PrimitiveResults.PrimitiveResult)
     return [pr.data.fields for pr in results.pub_results]
 end
@@ -1252,11 +1350,25 @@ end
 function get_options(p::JobParams)
     return p.options
 end
+
+"""
+    get_options(jid::JobIdOrString, account=nothing; refresh::Opt{Bool}=nothing)
+    get_options(jb::RuntimeJob)
+    get_options(p::JobParams)
+
+Get `EstimatorOptions` or `SamplerOptions` associated with a job, or job params.
+"""
 function get_options(jid::JobIdOrString, account=nothing; refresh::Opt{Bool}=nothing)
     j = job(JobId(job_id), account; refresh, results=false, params=true, metrics=false)
     return j.params.options
 end
 
+"""
+    get_job_id(job::RuntimeJob)
+    get_job_id(res::PrimitiveResults.PrimitiveResult)
+
+Return the job id from field in the object.
+"""
 get_job_id(job::RuntimeJob) = job.job_id
 get_job_id(res::PrimitiveResults.PrimitiveResult) = res.job_id
 

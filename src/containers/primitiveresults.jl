@@ -84,8 +84,23 @@ end
 
 @pretty_show(SamplerPUBResult)
 
+# This is described in the Python client as being very general.
+# But in fact, you can acces fields of `DataBin` directly, without going through fields first.
+# So we implement getproperty below
 struct DataBin{T}
     fields::T
+end
+
+# DataBin.evs, rather than DataBin.fields.evs
+function Base.getproperty(db::DataBin, sym::Symbol)
+    sym === :fields && return getfield(db, :fields)
+    getproperty(getfield(db, :fields), sym)
+end
+
+function Base.propertynames(db::DataBin, private::Bool=false)
+    nms = propertynames(getfield(db, :fields), private)
+    private || return nms
+    return (nms..., :fields)
 end
 
 @pretty_show(DataBin)
