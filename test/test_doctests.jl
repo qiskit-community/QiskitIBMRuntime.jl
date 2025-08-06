@@ -11,7 +11,7 @@
 import Documenter
 
 @testset "Doctests" begin
-    Documenter.DocMeta.setdocmeta!(QiskitRuntime, :DocTestSetup,
-                                   :(using QiskitRuntime); recursive=true)
-    Documenter.doctest(QiskitRuntime)
+    Documenter.DocMeta.setdocmeta!(QiskitIBMRuntime, :DocTestSetup,
+                                   :(using QiskitIBMRuntime); recursive=true)
+    Documenter.doctest(QiskitIBMRuntime)
 end

@@ -8,7 +8,7 @@
 # copyright notice, and modified files need to carry a notice indicating
 # that they have been altered from the originals.
 
-using QiskitRuntime.PauliStrings: Phase
+using QiskitIBMRuntime.PauliStrings: Phase
 
 @testset "Pauli phase" begin
 

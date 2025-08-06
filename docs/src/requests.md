@@ -1,7 +1,7 @@
 # Requests Layer
 
 ```@meta
-CurrentModule = QiskitRuntime.Requests
+CurrentModule = QiskitIBMRuntime.Requests
 ```
 
 ```@autodocs

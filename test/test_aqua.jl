@@ -8,7 +8,7 @@
 # copyright notice, and modified files need to carry a notice indicating
 # that they have been altered from the originals.
 
-using QiskitRuntime
+using QiskitIBMRuntime
 using Aqua: Aqua
 
 import DynamicQuantities
@@ -17,31 +17,31 @@ import DynamicQuantities
 # DynamicQuantities is very greedy with method real estate.
 # Due to how Aqua works, I cannot exclude it. I have to exclude a type native to this
 # package. If there is more stuff like this, we may have to drop DynamicQuantities.
-@testset "aqua test ambiguities QiskitRuntime Core Base" begin
-    Aqua.test_ambiguities([QiskitRuntime, Core, Base]; broken=false)
-#    Aqua.test_ambiguities([QiskitRuntime, Core, Base]; exclude=[QiskitRuntime.PauliPhases.Phase], broken=false)
+@testset "aqua test ambiguities QiskitIBMRuntime Core Base" begin
+    Aqua.test_ambiguities([QiskitIBMRuntime, Core, Base]; broken=false)
+#    Aqua.test_ambiguities([QiskitIBMRuntime, Core, Base]; exclude=[QiskitIBMRuntime.PauliPhases.Phase], broken=false)
 end
 
 @testset "aqua unbound_args" begin
-    Aqua.test_unbound_args(QiskitRuntime)
+    Aqua.test_unbound_args(QiskitIBMRuntime)
 end
 
 @testset "aqua undefined exports" begin
-    Aqua.test_undefined_exports(QiskitRuntime)
+    Aqua.test_undefined_exports(QiskitIBMRuntime)
 end
 
 @testset "aqua piracies" begin
-    Aqua.test_piracies(QiskitRuntime)
+    Aqua.test_piracies(QiskitIBMRuntime)
 end
 
 @testset "aqua project extras" begin
-    Aqua.test_project_extras(QiskitRuntime)
+    Aqua.test_project_extras(QiskitIBMRuntime)
 end
 
 @testset "aqua state deps" begin
-    Aqua.test_stale_deps(QiskitRuntime)
+    Aqua.test_stale_deps(QiskitIBMRuntime)
 end
 
 @testset "aqua deps compat" begin
-    Aqua.test_deps_compat(QiskitRuntime)
+    Aqua.test_deps_compat(QiskitIBMRuntime)
 end

@@ -24,7 +24,7 @@
     end
     options = make_options()
 
-    import QiskitRuntime.Requests._Requests: _run_job_dict
+    import QiskitIBMRuntime.Requests._Requests: _run_job_dict
     thedict = _run_job_dict("ibm_kyiv", thepubs, nothing; options)
     function pretty_string(dict)
         io = IOBuffer()

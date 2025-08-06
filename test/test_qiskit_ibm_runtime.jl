@@ -10,7 +10,7 @@
 
 # Set this at runtime so that it is not compiled in.
 # function set_cache_dir_for_test()
-#     set_env!(:QISKIT_RUNTIME_CACHE_DIR, joinpath(pkgdir(QiskitRuntime), "test", ".qiskit", "runtime_cache"))
+#     set_env!(:QISKIT_RUNTIME_CACHE_DIR, joinpath(pkgdir(QiskitIBMRuntime), "test", ".qiskit", "runtime_cache"))
 # end
 
 import Dates
@@ -32,12 +32,12 @@ end
 
 @testset "decoding" begin
     empty_ndarray = "eJyb7BfqGxDJyFDGUK2eklqcXKRupaBuk2ahrqOgnpZfVFKUmBefX5SSChJ3S8wpTtVRUC/OSCxIVbdS0DDQ0dRRqFWgAHABAFOzG1s="
-    v = QiskitRuntime.Decode._decode_decompress_deserialize_numpy(empty_ndarray)
+    v = QiskitIBMRuntime.Decode._decode_decompress_deserialize_numpy(empty_ndarray)
     @test isa(v, Vector{Float64})
     @test isempty(v)
 
     date_str = "2024-12-10T20:12:05.533Z"
-    date_obj = QiskitRuntime.Decode.parse_datetime(date_str)
+    date_obj = QiskitIBMRuntime.Decode.parse_datetime(date_str)
     @test date_obj == Dates.DateTime("2024-12-10T20:12:05.533")
 end
 
@@ -45,8 +45,8 @@ end
     job_id = JobId("na6gz6njpwihhasjfesi")
     job_result = Requests.results(job_id);
     @test job_result isa JSON3.Object
-    @test QiskitRuntime.Decode.is_typed_value(job_result)
-    primitive_result = QiskitRuntime.Decode.decode(job_result; job_id)
+    @test QiskitIBMRuntime.Decode.is_typed_value(job_result)
+    primitive_result = QiskitIBMRuntime.Decode.decode(job_result; job_id)
     @test primitive_result isa PrimitiveResult
     @test primitive_result.pub_results isa Vector{SamplerPUBResult}
     @test primitive_result.pub_results[1].data isa DataBin{<:NamedTuple}

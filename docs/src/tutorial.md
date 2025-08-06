@@ -11,9 +11,9 @@ This is not a really tutorial. It's a demonstration of a few things that you can
 
 Pull in a lot of symbols.
 ```julia-repl
-julia> using QiskitRuntime
+julia> using QiskitIBMRuntime
 ```
-You can also get exported symbols from only one module, e.g. `using QiskitRuntime.Jobs`.
+You can also get exported symbols from only one module, e.g. `using QiskitIBMRuntime.Jobs`.
 
 Retrieve job ids from the server. Note that an iterator is returned. So we use `collect`.
 ```julia-repl
@@ -53,7 +53,7 @@ be omitted.
 julia> job(jid; results=false, params=false)
 RuntimeJob{Nothing, Nothing}(
   job_id = JobId("wlv2rkrosk0uef9vfhpy"),
-  user_id = QiskitRuntime.Accounts.UserId("XXXXXXXXXXXXXXXXXXXXXXXX"),
+  user_id = QiskitIBMRuntime.Accounts.UserId("XXXXXXXXXXXXXXXXXXXXXXXX"),
   session_id = JobId("wlv2rkrosk0uef9vfhpy"),
   primitive_id = Estimator::PrimitiveType = 0,
   backend_name = "ibm_brisbane",

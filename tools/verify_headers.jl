@@ -13,9 +13,9 @@
 # - add_missing_headers() prepend files with header if missing. This overwrites original files.
 
 # We load the module in order to find the top level directory.
-using QiskitRuntime
+using QiskitIBMRuntime
 
-const THE_PACKAGE = QiskitRuntime
+const THE_PACKAGE = QiskitIBMRuntime
 const COPYRIGHT_YEAR_STR = "2025"
 const SOURCE_DIRS = ["src", "test", "tools"]
 const SOURCE_SUFFIXES = [".jl", ".py"]

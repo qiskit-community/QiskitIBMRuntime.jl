@@ -1,4 +1,4 @@
-# QiskitRuntime.jl
+# QiskitIBMRuntime.jl
 
 !!! warning
     This documentation is **not** for the standard client [qiskit-ibm-runtime](https://github.com/Qiskit/qiskit-ibm-runtime) to
@@ -12,11 +12,11 @@
     [Python-langauge client](https://github.com/Qiskit/qiskit-ibm-runtime).
 
 !!! warning
-    Documentation pages for `QiskitRuntime.jl` are a WIP.
+    Documentation pages for `QiskitIBMRuntime.jl` are a WIP.
 
 ```@meta
 DocTestSetup = quote
-    using QiskitRuntime
+    using QiskitIBMRuntime
 end
 ```
 
@@ -33,24 +33,24 @@ Depth = 2
 
 ```@meta
 DocTestSetup = quote
-  set_env!(:QISKIT_USER_DIR, joinpath(pkgdir(QiskitRuntime), "test", ".qiskit"))
+  set_env!(:QISKIT_USER_DIR, joinpath(pkgdir(QiskitIBMRuntime), "test", ".qiskit"))
 end
 ```
 
 ```@autodocs
-Modules = [QiskitRuntime]
+Modules = [QiskitIBMRuntime]
 ```
 
 # Jobs
 
 ```@autodocs
-Modules = [QiskitRuntime.Jobs]
+Modules = [QiskitIBMRuntime.Jobs]
 ```
 
 # Backends
 
 ```@autodocs
-Modules = [QiskitRuntime.Backends]
+Modules = [QiskitIBMRuntime.Backends]
 ```
 
 ```@meta
@@ -63,7 +63,7 @@ end
 # Instances
 
 ```@autodocs
-Modules = [QiskitRuntime.Instances]
+Modules = [QiskitIBMRuntime.Instances]
 ```
 
 ```@meta
@@ -79,21 +79,21 @@ DocTestSetup = nothing
 # PUBs
 
 ```@autodocs
-Modules = [QiskitRuntime.PUBs]
+Modules = [QiskitIBMRuntime.PUBs]
 ```
 
 # Circuits
 
 ```@autodocs
-Modules = [QiskitRuntime.Circuits]
+Modules = [QiskitIBMRuntime.Circuits]
 ```
 
 # Options
 
 ```@autodocs
-Modules = [QiskitRuntime.Options]
+Modules = [QiskitIBMRuntime.Options]
 ```
 
 ```@meta
-CurrentModule = QiskitRuntime
+CurrentModule = QiskitIBMRuntime
 ```

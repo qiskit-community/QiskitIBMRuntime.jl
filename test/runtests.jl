@@ -8,22 +8,22 @@
 # copyright notice, and modified files need to carry a notice indicating
 # that they have been altered from the originals.
 
-using QiskitRuntime
+using QiskitIBMRuntime
 import Dates
 using Test
 import JSON3
 
-using QiskitRuntime.PrimitiveResults: PrimitiveResult, SamplerPUBResult, DataBin
+using QiskitIBMRuntime.PrimitiveResults: PrimitiveResult, SamplerPUBResult, DataBin
 
-import QiskitRuntime.BitArraysX: BitArrayAlt
+import QiskitIBMRuntime.BitArraysX: BitArrayAlt
 
 old_user_dir = get_env(:QISKIT_USER_DIR)
-set_env!(:QISKIT_USER_DIR, joinpath(pkgdir(QiskitRuntime), "test", ".qiskit"))
+set_env!(:QISKIT_USER_DIR, joinpath(pkgdir(QiskitIBMRuntime), "test", ".qiskit"))
 
 try
     include("test_doctests.jl")
     include("test_payloads.jl")
-    include("test_qiskit_runtime.jl")
+    include("test_qiskit_ibm_runtime.jl")
 catch
     throw(ErrorException("tests failed"))
 finally

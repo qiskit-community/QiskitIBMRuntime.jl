@@ -7,14 +7,14 @@ using Documenter
 import Pkg
 Pkg.develop(path="..")
 
-# First, you *must* dev QiskitRuntime:
+# First, you *must* dev QiskitIBMRuntime:
 # Hopefully, the lines above these comments should be sufficient. If not...
 #
-# `(docs) pkg> dev path/to/this/package/QiskitRuntime`
+# `(docs) pkg> dev path/to/this/package/QiskitIBMRuntime`
 # Furthermore, often, if the `Project.toml` is updated, the documentation fails to build unless I
 # refresh the dev like this:
-# `(docs) pkg> rm QiskitRuntime
-# `(docs) pkg> dev path/to/this/package/QiskitRuntime`
+# `(docs) pkg> rm QiskitIBMRuntime
+# `(docs) pkg> dev path/to/this/package/QiskitIBMRuntime`
 
 # One way to build docs.
 # cd to this dir, `./docs/`.
@@ -23,16 +23,16 @@ Pkg.develop(path="..")
 # Note: Usually, this works for dev'ing the package as well.
 # `(docs) pkg> dev ..
 
-using QiskitRuntime
+using QiskitIBMRuntime
 
 # This sets current module for running doc tests.
 # We want to set it to the top-level module.
-Documenter.DocMeta.setdocmeta!(QiskitRuntime, :DocTestSetup, :(using QiskitRuntime); recursive=true)
+Documenter.DocMeta.setdocmeta!(QiskitIBMRuntime, :DocTestSetup, :(using QiskitIBMRuntime); recursive=true)
 
 makedocs(
-    sitename = "QiskitRuntime.jl",
+    sitename = "QiskitIBMRuntime.jl",
     format = Documenter.HTML(),
-    modules = [QiskitRuntime, QiskitRuntime.Requests],
+    modules = [QiskitIBMRuntime, QiskitIBMRuntime.Requests],
     doctest = false, # Don't run tests. We run them when running unit tests instead.
     warnonly = [:missing_docs], # Don't fail on a lot of things, like missing doc strings.
     authors = "John Lapeyre",
@@ -51,12 +51,12 @@ makedocs(
     # You must do this for a private github repo.
     # remotes = nothing,
     # Following prob not neccesary if remotes=nothing not present
-    # repo = Documenter.Remotes.GitHub("jlapeyre", "QiskitRuntime.jl"),
+    # repo = Documenter.Remotes.GitHub("jlapeyre", "QiskitIBMRuntime.jl"),
 )
 
 # Documenter can also automatically deploy documentation to gh-pages.
 # See "Hosting Documentation" and deploydocs() in the Documenter manual
 # for more information.
 deploydocs(
-    repo = "github.com/jlapeyre/QiskitRuntime.jl.git"
+    repo = "github.com/jlapeyre/QiskitIBMRuntime.jl.git"
 )

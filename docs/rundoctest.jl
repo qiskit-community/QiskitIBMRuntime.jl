@@ -1,4 +1,4 @@
-using QiskitRuntime
+using QiskitIBMRuntime
 
 # This code is meant for running the doctests from the Julia REPL
 # Or as a script.
@@ -12,7 +12,7 @@ using QiskitRuntime
 try
     DocMeta
 catch
-    using Documenter; DocMeta.setdocmeta!(QiskitRuntime, :DocTestSetup, :(using QiskitRuntime); recursive=true);
+    using Documenter; DocMeta.setdocmeta!(QiskitIBMRuntime, :DocTestSetup, :(using QiskitIBMRuntime); recursive=true);
 end
 
 # For testing we set some env vars, including for using  a `.qiskit/` in `./test` rather
@@ -30,10 +30,10 @@ end
 
 clean_env()
 
-ENV["QISKIT_CONFIG_DIR"] = joinpath(pkgdir(QiskitRuntime), "test", ".qiskit")
+ENV["QISKIT_CONFIG_DIR"] = joinpath(pkgdir(QiskitIBMRuntime), "test", ".qiskit")
 
 try
-    Documenter.doctest(QiskitRuntime)
+    Documenter.doctest(QiskitIBMRuntime)
 catch
     println("Doc tests failed")
 end

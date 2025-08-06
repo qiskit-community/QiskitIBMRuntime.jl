@@ -20,7 +20,7 @@ By default, the credentials are saved in the file
 ```sh
 $HOME/.qiskit/qiskit-ibm.json
 ```
-where `$HOME` is your home directory. `QiskitRuntime` can read this file, but cannot write it.
+where `$HOME` is your home directory. `QiskitIBMRuntime` can read this file, but cannot write it.
 You can create it with the Python client and/or edit it by hand.
 
 Which account is used for credentials may also be controlled with [environment variables](@ref environment_variables)
@@ -36,12 +36,12 @@ Which account is used for credentials may also be controlled with [environment v
 
 ```@meta
 DocTestSetup = quote
-  set_env!(:QISKIT_USER_DIR, joinpath(pkgdir(QiskitRuntime), "test", ".qiskit"))
+  set_env!(:QISKIT_USER_DIR, joinpath(pkgdir(QiskitIBMRuntime), "test", ".qiskit"))
 end
 ```
 
 ## Functions and types
 
 ```@autodocs
-Modules = [QiskitRuntime.Accounts]
+Modules = [QiskitIBMRuntime.Accounts]
 ```
