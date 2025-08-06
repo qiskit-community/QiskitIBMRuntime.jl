@@ -16,7 +16,7 @@ using JSON3: JSON3
 using Phase4s: Phase4s
 using PauliStrings2: PauliStrings2
 
-using ..QiskitRuntime: QiskitRuntime
+using ..QiskitIBMRuntime: QiskitIBMRuntime
 
 export to_dict, to_dict_shallow, to_dict_prune, Iter, showiter
 
@@ -116,7 +116,7 @@ macro pretty_show(typ, opts...)
     return esc(
         quote
             function Base.show(io::IO, ::MIME"text/plain", p::$typ)
-                #              return QiskitRuntime.Utils._show(io, p; newlines=true, show_name=$show_name)
+                #              return QiskitIBMRuntime.Utils._show(io, p; newlines=true, show_name=$show_name)
                 return Utils._show(
                     io,
                     p;
@@ -125,7 +125,7 @@ macro pretty_show(typ, opts...)
                     nonothing=$nonothing,
                 )
             end
-            #QiskitRuntime.Utils.want_pretty_show(::Type{T}) where {T<:$typ} = true
+            #QiskitIBMRuntime.Utils.want_pretty_show(::Type{T}) where {T<:$typ} = true
             Utils.want_pretty_show(::Type{T}) where {T<:$typ} = true
         end,
     )
@@ -280,12 +280,12 @@ function try_pkg_version(pkg_name::Symbol)
 end
 
 function version_info()
-    qiskit_runtime = pkgversion(QiskitRuntime)
-    qiskit_runtime_x = try_pkg_version(:QiskitRuntimeX)
+    qiskit_runtime = pkgversion(QiskitIBMRuntime)
+    qiskit_runtime_x = try_pkg_version(:QiskitIBMRuntimeX)
     if isnothing(qiskit_runtime_x)
         return (qiskit_runtime=qiskit_runtime,)
     end
-    pyversions = Main.QiskitRuntimeX.Utils.version_info()
+    pyversions = Main.QiskitIBMRuntimeX.Utils.version_info()
     v = (qiskit_runtime=qiskit_runtime, qiskit_runtime_x=qiskit_runtime_x)
     return merge(v, pyversions)
 end

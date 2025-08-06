@@ -9,17 +9,17 @@
 # that they have been altered from the originals.
 
 """
-    module QiskitRuntime
+    module QiskitIBMRuntime
 
-`QiskitRuntime` is a client for the [Qiskit Runtime REST API](https://docs.quantum.ibm.com/api/runtime) written in the Julia language.
+`QiskitIBMRuntime` is a client for the [Qiskit Runtime REST API](https://docs.quantum.ibm.com/api/runtime) written in the Julia language.
 
-`QiskitRuntime` is analagous to the Python-language client [qiskit-ibm-runtime](https://github.com/Qiskit/qiskit-ibm-runtime).
+`QiskitIBMRuntime` is analagous to the Python-language client [qiskit-ibm-runtime](https://github.com/Qiskit/qiskit-ibm-runtime).
 
 !!! warning
 
-    `QiskitRuntime` is very new, incomplete, and API-unstable.
+    `QiskitIBMRuntime` is very new, incomplete, and API-unstable.
 
-    `QiskitRuntime.jl` is *completely unsupported*. No person or entity is responsible for providing any support to users of this software.
+    `QiskitIBMRuntime.jl` is *completely unsupported*. No person or entity is responsible for providing any support to users of this software.
 
 # Accounts
 
@@ -45,7 +45,7 @@ Functions in the upper layer also take the keyword argument `refresh` and pass i
 
 Caching is done by dumping the REST responses via JSON3 in `~/.qiskit/runtime_cache/`.
 """
-module QiskitRuntime
+module QiskitIBMRuntime
 
 include("utils/utils.jl")
 #include("utils/struct_dicts.jl")
@@ -84,4 +84,4 @@ Reexport.@reexport using .API
 #
 include("precompile.jl")
 
-end # module QiskitRuntime
+end # module QiskitIBMRuntime

@@ -12,7 +12,7 @@
     module EnvVars
 
 Enforce documentation and a safe interface to the environment variables used by
-QiskitRuntime.jl
+QiskitIBMRuntime.jl
 
 "safe" means that typos in environment variable names will result in immediate run time or compile time
 errors.
@@ -28,7 +28,7 @@ module _EnvVars
 # url, which is usually "https://auth.quantum-computing.ibm.com/api" I find this name
 # confusing. So, I call it QISKIT_IBM_AUTH_URL". In any case, we don't use it.
 
-# If a docstring is missing for any of these, QiskitRuntime will fail to compile
+# If a docstring is missing for any of these, QiskitIBMRuntime will fail to compile
 const _ENV_VARS = [
     :QISKIT_ACCOUNT_NAME,
     :QISKIT_IBM_AUTH_URL,
@@ -43,7 +43,7 @@ const _ENV_VARS = [
 ]
 
 const _var_docs =
-    let unused = "Currently unused by QiskitRuntime.jl",
+    let unused = "Currently unused by QiskitIBMRuntime.jl",
         _var_descr = Dict(
             :QISKIT_ACCOUNT_NAME => "The name of the account in the credentials file to use by default.",
             :QISKIT_IBM_AUTH_URL => "The url used for authentication. $unused",
@@ -76,11 +76,11 @@ Return the value for environment variable `name`, or `default` if `name` is not 
 See [`env_vars`](@ref), [`set_env!`](@ref).
 
 !!! note
-    An error is thrown if `name` is not an environment variable used by `QiskitRuntime.jl`.
+    An error is thrown if `name` is not an environment variable used by `QiskitIBMRuntime.jl`.
 """
 function get_env(name::Symbol, default=nothing)
     name in _ENV_VARS || throw(
-        ArgumentError(lazy"Environment variable `$name` is not used by QiskitRuntime.jl"),
+        ArgumentError(lazy"Environment variable `$name` is not used by QiskitIBMRuntime.jl"),
     )
     return get(ENV, string(name), default)
 end
@@ -95,11 +95,11 @@ If `val` is `nothing`, then `name` is deleted from `Base.ENV`.
 See [`env_vars`](@ref), [`get_env`](@ref).
 
 !!! note
-    An error is thrown if `name` is not an environment variable used by `QiskitRuntime.jl`.
+    An error is thrown if `name` is not an environment variable used by `QiskitIBMRuntime.jl`.
 """
 function set_env!(name::Symbol, val::Opt{AbstractString})
     name in _ENV_VARS || throw(
-        ArgumentError(lazy"Environment variable `$name` is not used by QiskitRuntime.jl"),
+        ArgumentError(lazy"Environment variable `$name` is not used by QiskitIBMRuntime.jl"),
     )
     sname = string(name)
     if isnothing(val)
@@ -113,7 +113,7 @@ end
 """
     env_vars()
 
-Return a `Dict` of all environment variables used by QiskitRuntime.jl and their values.
+Return a `Dict` of all environment variables used by QiskitIBMRuntime.jl and their values.
 
 If the environment variable is not set then its value is `nothing` in the returned
 `Dict`. Here "not set" means it is not a key in `Base.ENV`.

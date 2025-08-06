@@ -141,7 +141,7 @@ Decorates a `struct` definition to add features for Primitive options
   example `SmartAsserts.jl`. At present, in applications of `@params` we import and use `ArgCheck.jl`.
 * Shortcut `Symbol`s are: GT0, GE0, GE1. These write the appropriate `@argcheck`. If the type of
   field is a `Vector`, then `all` is called with the predicate.
-* `QiskitRuntime.Utils.@pretty_show` is written for the struct name.
+* `QiskitIBMRuntime.Utils.@pretty_show` is written for the struct name.
 
 !!! details
     Development notes

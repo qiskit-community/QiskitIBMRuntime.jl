@@ -68,10 +68,10 @@ The data is stored as a string that is validated on construction.
 Note that passing validation is a necessary, but not sufficient condition for verifying that a job id
 may have been returned by the server. We could investigate the format of job ids and tighten up the validation.
 
-Upon submitting a job with [`QiskitRuntime.Jobs.run_job`](@ref) a job id string is returned.
+Upon submitting a job with [`QiskitIBMRuntime.Jobs.run_job`](@ref) a job id string is returned.
 `JobId` is a wrapper for this string.
 
-Upon initiating a [`QiskitRuntime.Jobs.Batch`](@ref) of jobs, a session id string is returned.
+Upon initiating a [`QiskitIBMRuntime.Jobs.Batch`](@ref) of jobs, a session id string is returned.
 `SessionId` is a wrapper for this string.
 
 See [`validate`](@ref), [`AbstractJobId`](@ref).

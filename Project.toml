@@ -1,4 +1,4 @@
-name = "QiskitRuntime"
+name = "QiskitIBMRuntime"
 uuid = "721cb36f-8cdb-4047-ab39-84aff8fc02a4"
 authors = ["John Lapeyre <jlapeyre@users.noreply.github.com> and contributors"]
 version = "0.2.0"

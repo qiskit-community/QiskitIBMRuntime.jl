@@ -174,7 +174,7 @@ import ._Accounts:
 Return a `struct` with information for making requests to the REST API.
 
 The account argument may be omitted making requests to the server, for
-example when calling [`QiskitRuntime.Jobs.job`](@ref).
+example when calling [`QiskitIBMRuntime.Jobs.job`](@ref).
 In these cases, the account will be constructed with the form `QuantumAccount()`.
 
 The following are tried in order, and the first to succeed is returned.
@@ -237,7 +237,7 @@ QuantumAccount{Nothing}(
 )
 ```
 
-Using [`QiskitRuntime.EnvVars.set_env!`](@ref), we change the default account name with an environment variable.
+Using [`QiskitIBMRuntime.EnvVars.set_env!`](@ref), we change the default account name with an environment variable.
  To reduce verbosity, we just show the `instance.`
 ```jldoctest
 julia> set_env!(:QISKIT_ACCOUNT_NAME, "qiskit-other");
