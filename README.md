@@ -40,7 +40,7 @@ RuntimeJob{PrimitiveResult{SamplerPUBResult}, JobParams{QiskitRuntime.Jobs.Sampl
   backend_name = "ibm_nazca",
   creation_date = 2024-12-11T23:32:08.879,
   end_date = 2024-12-12T07:06:53.615,
-  instance = Instance(ibm-q-internal/dev-qiskit/sdk),
+  instance = Instance(xxx/yyy/zzz),
   state = Dict{Symbol, String} with 1 entry:
   :status => "Completed",
   status = Done::JobStatus,
