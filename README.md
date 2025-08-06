@@ -4,8 +4,9 @@
 
 A Julia-language client for the IBM Quantum Platform via the REST API.
 
-This client supports retrieving job data and reading it into Julia-native objects.
-Support for submitting jobs is minimal.
+> [!WARNING]
+> This client supports retrieving job data and reading it into Julia-native objects.
+> Support for submitting jobs is minimal.
 
 To use install `QiskitIBMRuntime` do the following from the Julia REPL
 
