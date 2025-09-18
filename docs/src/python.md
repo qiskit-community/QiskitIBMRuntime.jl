@@ -1,8 +1,5 @@
 # Using PythonCall and other packages
 
-!!! note
-    [QiskitIBMRuntimeX.jl](https://github.com/jlapeyre/QiskitIBMRuntimeX.jl) provides an interface to Python-language Qiskit packages.
-
 There are a few ways to try to conveniently use packages that are not
 dependencies of `QiskitIBMRuntime`. (Or of any other package you want to use)
 
@@ -52,12 +49,6 @@ Unset `JULIA_CONDAPKG_BACKEND` if you have set it. The file [./CondaPkg.toml](ht
     There are several GH issues on the `PythonCall` and `CondaPkg` repos.
     And the problem is apparetnly "solved".
     But it was not immediately obvious to me how to successfully `pyimport("qiskit-ibm-runtime")`.
-
-### Loading PythonCall
-
-UPDATE: `QiskitIBMRuntime` does not depend (strong, weak or otherwise) on `PythonCall`.
-Another package `QiskitIBMRuntimeX` is being developed to talk to the Python-language
-Qiskit tools.
 
 ```@raw html
 <!--  LocalWords:  PythonCall QiskitIBMRuntime toml julia ENV CONDAPKG BACKEND

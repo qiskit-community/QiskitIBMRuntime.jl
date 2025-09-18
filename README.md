@@ -26,9 +26,6 @@ Documentation is not deployed online. You can view it like this:
 * Read [./docs/make.jl](./docs/make.jl)
 * Run [./docs/runserver.sh](./docs/runserver.sh)
 
-Extensions using Python-language Qiskit packages, such as [qiskit](https://github.com/Qiskit/qiskit),
-are provided by [QiskitIBMRuntimeX.jl](https://github.ibm.com/ibm-q-research/QiskitIBMRuntimeX.jl)
-
 ## Example
 
 ```julia-repl
