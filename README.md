@@ -1,3 +1,8 @@
+> [!NOTE]
+> This client is no longer actively maintained and is incompatible with current versions of Qiskit.
+>
+> We recommend migrating to [the maintained Julia client](https://github.com/Qiskit/QiskitIBMRuntimeC.jl), which is a wrapper around `qiskit-ibm-runtime-c`.
+
 # QiskitIBMRuntime
 
 [![Aqua QA](https://raw.githubusercontent.com/JuliaTesting/Aqua.jl/master/badge.svg)](https://github.com/JuliaTesting/Aqua.jl)
